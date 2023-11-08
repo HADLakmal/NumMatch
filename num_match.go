@@ -15,7 +15,7 @@ type NumMatch struct {
 	exclude []int64
 }
 
-func NumberSeries(begin, offset int64, exclude []int64) NumberMatch {
+func NewNumMatchSeries(begin, offset int64, exclude []int64) NumberMatch {
 	sort.Slice(exclude, func(i, j int) bool { return exclude[i] < exclude[j] })
 
 	var excludeIndex int
@@ -39,6 +39,10 @@ func (n *NumMatch) RoundDown(target int64) (out int64) {
 	// target is not above the start
 	if target <= n.begin {
 		return target
+	}
+	// when target is not allign with the series
+	if target%n.offset != 0 {
+		target = (target / n.offset) * n.offset
 	}
 	// serch the traget value in exclude list
 	i := sort.Search(len(n.exclude), func(i int) bool {
@@ -72,6 +76,10 @@ func (n *NumMatch) RoundUp(target int64) (out int64) {
 	// target is not above the start
 	if target <= n.begin {
 		target = n.begin
+	}
+	// when target is not allign with the series
+	if target%n.offset != 0 {
+		target = (target / n.offset) * n.offset
 	}
 	// serch the traget value in exclude list
 	i := sort.Search(len(n.exclude), func(i int) bool {

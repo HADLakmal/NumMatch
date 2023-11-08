@@ -79,7 +79,7 @@ func TestNumMatch_RoundDown(t *testing.T) {
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			n := NumberSeries(
+			n := NewNumMatchSeries(
 				tt.fields.begin,
 				tt.fields.offset,
 				tt.fields.exclude,
@@ -110,6 +110,15 @@ func TestNumMatch_RoundUp(t *testing.T) {
 			},
 			target:  14,
 			wantOut: 16,
+		},
+		`target not in the series`: {
+			fields: fields{
+				begin:   2,
+				offset:  2,
+				exclude: []int64{8, 14, 28},
+			},
+			target:  7,
+			wantOut: 6,
 		},
 		`target in exclude list of values`: {
 			fields: fields{
@@ -159,7 +168,7 @@ func TestNumMatch_RoundUp(t *testing.T) {
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			n := NumberSeries(
+			n := NewNumMatchSeries(
 				tt.fields.begin,
 				tt.fields.offset,
 				tt.fields.exclude,

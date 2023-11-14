@@ -55,7 +55,7 @@ func (n *NumMatch) RoundDown(target int64) (out int64) {
 	loop:
 		// target value found in exclude list
 		if len(n.exclude) > i && i >= 0 {
-			out = out - n.offset
+			out -= n.offset
 			// check the output with in the range
 			if out <= n.begin {
 				return target
@@ -63,7 +63,7 @@ func (n *NumMatch) RoundDown(target int64) (out int64) {
 			if i > 0 {
 				// check output fell into exclude list
 				if n.exclude[i-1] == out {
-					i = i - 1
+					i -= 1
 					goto loop
 				}
 			}
@@ -91,7 +91,7 @@ func (n *NumMatch) RoundUp(target int64) (out int64) {
 	if len(n.exclude) > i && n.exclude[i] == target {
 	loop:
 		if len(n.exclude) > i && i >= 0 {
-			out = out + n.offset
+			out += n.offset
 			// check the output with in the range
 			if out <= n.begin {
 				return n.begin
@@ -99,7 +99,7 @@ func (n *NumMatch) RoundUp(target int64) (out int64) {
 			if len(n.exclude) > i {
 				// check output fell into exclude list
 				if n.exclude[i+1] == out {
-					i = i + 1
+					i += 1
 					goto loop
 				}
 			}

@@ -28,7 +28,7 @@ func (n *NumSeries) RoundDown(target int64) (out int64) {
 	out = target
 loop:
 	if n.exclude(out) {
-		out = out - n.offset
+		out -= n.offset
 		// check the output with in the range
 		if out <= n.begin {
 			return target
@@ -50,7 +50,7 @@ func (n *NumSeries) RoundUp(target int64) (out int64) {
 	out = target
 loop:
 	if n.exclude(out) {
-		out = out + n.offset
+		out += n.offset
 		goto loop
 	}
 	return out
